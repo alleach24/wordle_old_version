@@ -19,8 +19,12 @@ public class Wordle {
       String word;
       // initiate a new Set to hold all the possible words
       Set<String> possibleWords = new HashSet<String>();
-      // create a file reader using the argument input
-      FileReader file = new FileReader(args[0]);
+            // create a keyboard scanner and prompt for the filename
+      Scanner keyboard = new Scanner(System.in);
+      System.out.print("Enter the filename for words to use: ");
+      String filename = keyboard.nextLine();
+            // create a file reader using the argument input
+      FileReader file = new FileReader(filename);
       // create a buffered reader
       BufferedReader br = new BufferedReader(file);
       // run through each line of the file
@@ -31,7 +35,26 @@ public class Wordle {
          }
       }   
       
-      String asdfasjl = bestGuess(possibleWords);
+      // take in the end word and set it as answer
+      System.out.println();
+      System.out.print("Enter the word to be optimized: ");
+      String answer = keyboard.nextLine();
+      // check to make sure the answer is included in the provided list
+      
+      while (true) {
+         if (!possibleWords.contains(answer)) {
+            System.out.print("This word is not valid. Please enter a different word: ");
+            answer = keyboard.nextLine();
+         }
+         else {
+            break; }
+      }
+      
+      
+      String nextGuess = bestGuess(possibleWords);
+      
+      System.out.println();
+      System.out.println("The next best guess is: " + nextGuess);
    }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,14 +139,13 @@ public class Wordle {
             optimalGuess.add(word);  
          }
       }
-      System.out.println(optimalGuess);
       
       // NOW WHAT TO DO is try to narrow down "optimalGuess" to just one word. So if there's no values in "optimalGuess" at this point, we need to evaluate words with the 
       // 6th, 7th, etc. most common letter. If there's more than 1 value in "optimalGuess", we need to figure out how to narrow it down to one best guess.
       
       
-      // this will eventually return the single most optimal guess. but until then just put this
-      return "yay";
+      // this will eventually return the single most optimal guess. but until then just pick the first entry of optimalGuess
+      return optimalGuess.iterator().next();
    }
   
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
