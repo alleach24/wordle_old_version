@@ -78,7 +78,7 @@ public class Wordle {
       for (String word : possibleWords) {
          Character[] wordArray = {word.charAt(0), word.charAt(1), word.charAt(2), word.charAt(3), word.charAt(4)};
          lettersSet.clear();
-         lettersSet.addAll(Arrays.asList(letters));
+         lettersSet.addAll(Arrays.asList(wordArray));
          
          for (char letter : lettersSet) {
             letter_counts.put(letter, (letter_counts.get(letter) + 1));
