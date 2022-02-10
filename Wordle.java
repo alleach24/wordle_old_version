@@ -16,15 +16,12 @@ public class Wordle {
       // take in a file name from entered arguments
       File file = new File(args[0]);
       // create a new reader for the file
-      BufferedReader buffReader = new BufferedReader(new FileReader(file));
-      // initiate a string
-      String str;
-      // initiate a Set
-      Set<String> possibleWords = new HashSet<String>();
+      Scanner scanner = new Scanner(file);
+
       // read through all the strings in the file and add them to the set if they contain 5 letters
-      while ((str = buffReader.readLine()) != null) {
-         if (str.length() == 5) {
-            possibleWords.add(str);
+      while (sc.hasNextLine()) {
+         if (sc.next() == 5) {
+            possibleWords.add(sc.next());
          }
       }     
       
