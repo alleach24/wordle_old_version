@@ -93,7 +93,9 @@ public class Wordle {
          }
       }
       
-      // why the funny math? we're gonna eventually want the letter that will eliminate the most other words. This is defined by the letter that appears the closest to 50% of the time. So to find that, assuming you have the percentages of letters from 0 to 1.0, you find the closest to 0.5 by subtracting 0.5 from each value, taking the absolute valueof that, and then looking for the lowest numbers
+      // why the funny math? we're gonna eventually want the letter that will eliminate the most other words. This is defined by the letter that appears the closest to 50% 
+      // of the time. So to find that, assuming you have the percentages of letters from 0 to 1.0, you find the closest to 0.5 by subtracting 0.5 from each value, taking the 
+      // absolute valueof that, and then looking for the lowest numbers
       for (char key : letter_counts.keySet()) {
          letter_counts.put(key, Math.abs((letter_counts.get(key) / wordCount) - 0.5));
       }
@@ -109,13 +111,15 @@ public class Wordle {
       commonLetters = (letter_counts.keySet()).toArray(commonLetters);
       // determine which of all the possible words has the 5 most common letters           
       for (String word : possibleWords) {
-         if ( word.contains(String.valueOf(commonLetters[0])) && word.contains(String.valueOf(commonLetters[1])) && word.contains(String.valueOf(commonLetters[2])) && word.contains(String.valueOf(commonLetters[3])) && word.contains(String.valueOf(commonLetters[4])) ) {
+         if ( word.contains(String.valueOf(commonLetters[0])) && word.contains(String.valueOf(commonLetters[1])) && word.contains(String.valueOf(commonLetters[2])) && 
+             word.contains(String.valueOf(commonLetters[3])) && word.contains(String.valueOf(commonLetters[4])) ) {
             optimalGuess.add(word);  
          }
       }
       System.out.println(optimalGuess);
       
-      // NOW WHAT TO DO is try to narrow down "optimalGuess" to just one word. So if there's no values in "optimalGuess" at this point, we need to evaluate words with the 6th, 7th, etc. most common letter. If there's more than 1 value in "optimalGuess", we need to figure out how to narrow it down to one best guess.
+      // NOW WHAT TO DO is try to narrow down "optimalGuess" to just one word. So if there's no values in "optimalGuess" at this point, we need to evaluate words with the 
+      // 6th, 7th, etc. most common letter. If there's more than 1 value in "optimalGuess", we need to figure out how to narrow it down to one best guess.
       
       
       // this will eventually return the single most optimal guess. but until then just put this
