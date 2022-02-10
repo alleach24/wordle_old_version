@@ -10,7 +10,7 @@ import java.util.*;
 public class Wordle {
    
    // main method
-   public static void main(String[] args) {
+   public static void main(String[] args) throws Exception {
       
       // read in the list of all possible words that exist
       // take in a file name from entered arguments
