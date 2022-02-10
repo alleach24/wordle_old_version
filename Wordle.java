@@ -20,11 +20,11 @@ public class Wordle {
       // initiate a string
       String str;
       // initiate a Set
-      Set<String> possilbeWords = new HashSet<String>();
+      Set<String> possibleWords = new HashSet<String>();
       // read through all the strings in the file and add them to the set if they contain 5 letters
       while ((str = buffReader.readLine()) != null) {
          if (str.length() == 5) {
-            possilbeWords.add(str);
+            possibleWords.add(str);
          }
       }     
       
