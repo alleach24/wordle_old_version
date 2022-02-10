@@ -22,7 +22,7 @@ public class Wordle {
       // read through all the strings in the file and add them to the set if they contain 5 letters
       while (scanner.hasNextLine()) {
          if (scanner.nextLine().length() == 5) {
-            possibleWords.add(scanner.next());
+            possibleWords.add(scanner.nextLine());
          }
       }     
       
