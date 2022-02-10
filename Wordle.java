@@ -44,5 +44,51 @@ public class Wordle {
       
    }
    */ 
+   
+   // calculate the next word
+   public String bestGuess(Set<String> possibleWords) {
+      // create a map and instantiate it with the 26 letters and a count of 0 for each
+      Map<Character, Double> letter_counts = new HashMap<Character, Double>();
+      letter_counts.put('a', 0.0);
+      letter_counts.put('b', 0.0);
+      letter_counts.put('c', 0.0);
+      letter_counts.put('d', 0.0);
+      letter_counts.put('e', 0.0);
+      letter_counts.put('f', 0.0);
+      letter_counts.put('g', 0.0);
+      letter_counts.put('h', 0.0);
+      letter_counts.put('i', 0.0);
+      letter_counts.put('j', 0.0);
+      letter_counts.put('k', 0.0);
+      letter_counts.put('l', 0.0);
+      letter_counts.put('m', 0.0);
+      letter_counts.put('n', 0.0);
+      letter_counts.put('o', 0.0);
+      letter_counts.put('p', 0.0);
+      letter_counts.put('q', 0.0);
+      letter_counts.put('r', 0.0);
+      letter_counts.put('s', 0.0);
+      letter_counts.put('t', 0.0);
+      letter_counts.put('u', 0.0);
+      letter_counts.put('v', 0.0);
+      letter_counts.put('w', 0.0);
+      letter_counts.put('x', 0.0);
+      letter_counts.put('y', 0.0);
+      letter_counts.put('z', 0.0);
+      
+      // create an int to count the total number of possible words in the argument
+      int wordCount = possibleWords.size();
+      
+      Set<Character> lettersSet = new LinkedHashSet<Character>();
+      for (String word : possibleWords) {
+         Character[] wordArray = {word.charAt(0), word.charAt(1), word.charAt(2), word.charAt(3), word.charAt(4)};
+         lettersSet.clear();
+         lettersSet.addAll(Arrays.asList(letters));
+         
+         for (char letter : lettersSet) {
+            letter_counts.put(letter, (letter_counts.get(letter) + 1));            
+      }
+      
+   }
 }
 
