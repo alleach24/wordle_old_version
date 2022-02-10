@@ -6,6 +6,11 @@
 // import statements go here
 
 public class Wordle {
+   
+   // main method
+   public static void main(String[] args) {
+      
+   }  
   
 }
 
