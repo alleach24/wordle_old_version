@@ -4,15 +4,16 @@
 */
 
 // import statements go here
-import java.io.*;
 import java.util.*;
-import java.nio.*;
+import java.io.BubfferedReader;
+import java.io.FileReader;
 
 public class Wordle {
    
    // main method
    public static void main(String[] args) throws Exception {
       
+      /*
       // read in the list of all possible words that exist
       // take in a file name from entered arguments
       Path path = FileSystem.getDefault().getPath(args[0]);
@@ -27,6 +28,18 @@ public class Wordle {
             possibleWords.add(scanner.nextLine());
          }
       }     
+      */
+      
+      String line;
+      Set<String> possibleWords = new HashSet<String>();
+      FileReader file = new FileReader(args[0]);
+      BufferedReader br = new BufferedReader(file);
+      while ((line = br.readLine()) != null) {
+         if (line.length() == 5) {
+            possibleWords.add(line);
+         }
+      }
+         
       
       
       
