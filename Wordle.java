@@ -84,6 +84,8 @@ public class Wordle {
             letter_counts.put(letter, (letter_counts.get(letter) + 1));
          }
       }
+      
+      return "yay"
    }
 }
 
