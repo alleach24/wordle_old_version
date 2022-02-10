@@ -26,7 +26,7 @@ public class Wordle {
       while ((word = br.readLine()) != null) {
          // add the word to the Set of possible words if the word has 5 letters
          if (word.length() == 5) {
-            possibleWords.add(line);
+            possibleWords.add(word);
          }
       }
          
