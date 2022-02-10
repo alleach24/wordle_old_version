@@ -21,7 +21,7 @@ public class Wordle {
       Set<String> possibleWords = new HashSet<String>();
       // read through all the strings in the file and add them to the set if they contain 5 letters
       while (scanner.hasNextLine()) {
-         if (scanner.next().length() == 5) {
+         if (scanner.nextLine().length() == 5) {
             possibleWords.add(scanner.next());
          }
       }     
