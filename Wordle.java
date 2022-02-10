@@ -7,6 +7,7 @@
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.lang.*;
 
 public class Wordle {
    
@@ -32,7 +33,9 @@ public class Wordle {
       
       String asdfasjl = bestGuess(possibleWords);
    }
-   
+
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    
    /* 
    // create a list of possible words
@@ -42,7 +45,10 @@ public class Wordle {
    }
    */ 
    
-   // calculate the next word
+   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   // CALCULATE THE NEXT BEST WORD TO GUESS
    public static String bestGuess(Set<String> possibleWords) {
       // create a map and instantiate it with the 26 letters and a count of 0 for each
       Map<Character, Double> letter_counts = new HashMap<Character, Double>();
@@ -87,12 +93,57 @@ public class Wordle {
          }
       }
       
+      // why the funny math? we're gonna eventually want the letter that will eliminate the most other words. This is defined by the letter that appears the closest to 50% of the time. So to find that, assuming you have the percentages of letters from 0 to 1.0, you find the closest to 0.5 by subtracting 0.5 from each value, taking the absolute valueof that, and then looking for the lowest numbers
       for (char key : letter_counts.keySet()) {
-         letter_counts.put(key, letter_counts.get(key) / wordCount * 100);
+         letter_counts.put(key, Math.abs((letter_counts.get(key) / wordCount) - 0.5));
       }
+      // and this sorts the map so that the lowest values are at the beginning
+      letter_counts = sortByValues(letter_counts);
       
-      System.out.println(letter_counts);
+      
+      // determine the words that contain the 5 most common letters
+      // instantiate a new set of optimal guesses
+      Set<String> optimalGuess = new LinkedHashSet<String>();
+      // put the most common letters into an array for easy access
+      Character[] commonLetters = new Character[(letter_counts.keySet()).size()];
+      commonLetters = (letter_counts.keySet()).toArray(commonLetters);
+      // determine which of all the possible words has the 5 most common letters           
+      for (String word : possibleWords) {
+         if ( word.contains(String.valueOf(commonLetters[0])) && word.contains(String.valueOf(commonLetters[1])) && word.contains(String.valueOf(commonLetters[2])) && word.contains(String.valueOf(commonLetters[3])) && word.contains(String.valueOf(commonLetters[4])) ) {
+            optimalGuess.add(word);  
+         }
+      }
+      System.out.println(optimalGuess);
+      
+      // NOW WHAT TO DO is try to narrow down "optimalGuess" to just one word. So if there's no values in "optimalGuess" at this point, we need to evaluate words with the 6th, 7th, etc. most common letter. If there's more than 1 value in "optimalGuess", we need to figure out how to narrow it down to one best guess.
+      
+      
+      // this will eventually return the single most optimal guess. but until then just put this
       return "yay";
    }
+  
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   // this method sorts a Map. specifically it's used to sort the letters by their likelihood of occuring in the word.
+   public static HashMap<Character, Double> sortByValues(Map<Character, Double> letter_counts) {
+      // this chunk of code sorts the letters by their value
+      List<Map.Entry<Character, Double> > list = new LinkedList<Map.Entry<Character, Double> >(letter_counts.entrySet());
+      Collections.sort(list, new Comparator<Map.Entry<Character, Double> >() {
+         public int compare(Map.Entry<Character, Double> o1, Map.Entry<Character, Double> o2)
+         {
+            return (o1.getValue()).compareTo(o2.getValue());
+         }
+      });
+      HashMap<Character, Double> temp = new LinkedHashMap<Character, Double>();
+      for (Map.Entry<Character, Double> aa : list) {
+         temp.put(aa.getKey(), aa.getValue());
+      }  
+      return temp;
+   }
+   
+   
+   
+   
 }
 
