@@ -30,7 +30,7 @@ public class Wordle {
          }
       }   
       
-      bestGuess(possibleWords);
+      String asdfasjl = bestGuess(possibleWords);
    }
    
    
@@ -43,7 +43,7 @@ public class Wordle {
    */ 
    
    // calculate the next word
-   public String bestGuess(Set<String> possibleWords) {
+   public static String bestGuess(Set<String> possibleWords) {
       // create a map and instantiate it with the 26 letters and a count of 0 for each
       Map<Character, Double> letter_counts = new HashMap<Character, Double>();
       letter_counts.put('a', 0.0);
@@ -87,7 +87,7 @@ public class Wordle {
          }
       }
       
-      for (char key : letter_counts.ketSet()) {
+      for (char key : letter_counts.keySet()) {
          letter_counts.put(key, letter_counts.get(key) / wordCount * 100);
       }
       
