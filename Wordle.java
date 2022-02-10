@@ -29,6 +29,8 @@ public class Wordle {
             possibleWords.add(word);
          }
       }   
+      
+      bestGuess(possibleWords);
    }
    
    
