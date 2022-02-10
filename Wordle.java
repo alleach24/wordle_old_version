@@ -5,37 +5,27 @@
 
 // import statements go here
 import java.util.*;
-import java.io.BubfferedReader;
+import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class Wordle {
    
    // main method
    public static void main(String[] args) throws Exception {
-      
-      /*
-      // read in the list of all possible words that exist
-      // take in a file name from entered arguments
-      Path path = FileSystem.getDefault().getPath(args[0]);
-      File file = new File(path);
-      // create a new reader for the file
-      Scanner scanner = new Scanner(file);
-      // create a new Set
+
+      // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
+      // initiate a new string to hold each word
+      String word;
+      // initiate a new Set to hold all the possible words
       Set<String> possibleWords = new HashSet<String>();
-      // read through all the strings in the file and add them to the set if they contain 5 letters
-      while (scanner.hasNextLine()) {
-         if (scanner.nextLine().length() == 5) {
-            possibleWords.add(scanner.nextLine());
-         }
-      }     
-      */
-      
-      String line;
-      Set<String> possibleWords = new HashSet<String>();
+      // create a file reader using the argument input
       FileReader file = new FileReader(args[0]);
+      // create a buffered reader
       BufferedReader br = new BufferedReader(file);
-      while ((line = br.readLine()) != null) {
-         if (line.length() == 5) {
+      // run through each line of the file
+      while ((word = br.readLine()) != null) {
+         // add the word to the Set of possible words if the word has 5 letters
+         if (word.length() == 5) {
             possibleWords.add(line);
          }
       }
