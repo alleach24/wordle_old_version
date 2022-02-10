@@ -28,12 +28,7 @@ public class Wordle {
          if (word.length() == 5) {
             possibleWords.add(word);
          }
-      }
-         
-      
-      
-      
-      
+      }   
    }
    
    
@@ -86,9 +81,9 @@ public class Wordle {
          lettersSet.addAll(Arrays.asList(letters));
          
          for (char letter : lettersSet) {
-            letter_counts.put(letter, (letter_counts.get(letter) + 1));            
+            letter_counts.put(letter, (letter_counts.get(letter) + 1));
+         }
       }
-      
    }
 }
 
