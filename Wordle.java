@@ -85,7 +85,12 @@ public class Wordle {
          }
       }
       
-      return "yay"
+      for (char key : letter_counts.ketSet()) {
+         letter_counts.put(key, letter_counts.get(key) / wordCount * 100);
+      }
+      
+      System.out.println(letter_counts);
+      return "yay";
    }
 }
 
