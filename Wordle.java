@@ -14,7 +14,8 @@ public class Wordle {
       
       // read in the list of all possible words that exist
       // take in a file name from entered arguments
-      File file = new File(args[0]);
+      Path path = Paths.get(args[0]);
+      File file = new File(path);
       // create a new reader for the file
       Scanner scanner = new Scanner(file);
       // create a new Set
