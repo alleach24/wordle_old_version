@@ -7,5 +7,5 @@ Ideas:
 3) an actual replecation of the game
 
 Files:
-words_alpha.txt >> text file that contains all words in the English dictionary
-words_alpha_test.txt >> a smaller list of random words in the English dictionary for testing purposes
+1) words_alpha.txt >> text file that contains all words in the English dictionary
+2) words_alpha_test.txt >> a smaller list of random words in the English dictionary for testing purposes
