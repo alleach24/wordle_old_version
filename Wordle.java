@@ -6,6 +6,7 @@
 // import statements go here
 import java.io.*;
 import java.util.Set;
+import java.util.HashMap;
 
 public class Wordle {
    
