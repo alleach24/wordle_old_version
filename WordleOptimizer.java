@@ -15,23 +15,10 @@ public class WordleOptimizer {
    public static void main(String[] args) throws Exception {
 
       // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
-      setUpGame();
-      
-      // take in the end word and set it as answer
-      System.out.println();
-      System.out.print("Enter the word to be optimized: ");
-      String answer = keyboard.nextLine();
-      // check to make sure the answer is included in the provided list
-            while (true) {
-         if (!possibleWords.contains(answer)) {
-            System.out.print("This word is not valid. Please enter a different word: ");
-            answer = keyboard.nextLine();
-         }
-         else {
-            break; }
-      }
-      
-           
+      WordleGame mygame = new WordleGame();
+      String answer = mygame.getAnswer();
+      Set<String> possibleWords = mygame.getWordList();
+         
       
       String nextGuess = bestGuess(possibleWords);
       System.out.println();
@@ -71,7 +58,7 @@ public class WordleOptimizer {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
+   /*
    // move this to Game class?
    public static void setUpGame() {
       // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
@@ -97,7 +84,7 @@ public class WordleOptimizer {
          }
       }   
    }
-   
+   */
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
