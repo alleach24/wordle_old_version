@@ -28,10 +28,12 @@ public class Wordle {
       // create a buffered reader
       BufferedReader br = new BufferedReader(file);
       // run through each line of the file
+      System.out.println("These are the possible words: ");
       while ((word = br.readLine()) != null) {
          // add the word to the Set of possible words if the word has 5 letters
          if (word.length() == 5) {
             possibleWords.add(word);
+            System.out.println(word);
          }
       }   
       
@@ -40,8 +42,7 @@ public class Wordle {
       System.out.print("Enter the word to be optimized: ");
       String answer = keyboard.nextLine();
       // check to make sure the answer is included in the provided list
-      
-      while (true) {
+            while (true) {
          if (!possibleWords.contains(answer)) {
             System.out.print("This word is not valid. Please enter a different word: ");
             answer = keyboard.nextLine();
@@ -50,23 +51,62 @@ public class Wordle {
             break; }
       }
       
+           
       
       String nextGuess = bestGuess(possibleWords);
       
       System.out.println();
       System.out.println("The next best guess is: " + nextGuess);
+      
+      
+      int[] match = new int[5];
+      for (int i = 0; i < 5; i++) {
+         if (nextGuess.charAt(i) == answer.charAt(i)) {
+            match[i] = 2; }
+         else if (answer.contains(String.valueOf(nextGuess.charAt(i)))) {
+            match[i] = 1; }
+      }
+      
+      
+      
+      
+      for (int element : match) {
+         System.out.print(element + " ");
+      }
+      
+      createPossibleWords(match, nextGuess, possibleWords);
    }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    
-   /* 
-   // create a list of possible words
-   public Set<String> createPossilbeWords() {
+   
+   public static void createPossibleWords(int[] match, String previousGuess, Set<String> possibleWords) {
+      Set<String> newPossibleWords = new HashSet<String>(possibleWords);
       
+      for (String word : possibleWords) {
+         for (int i = 0; i<5; i++) {
+            if (match[i] == 0 && word.contains(String.valueOf(previousGuess.charAt(i)))) {
+               newPossibleWords.remove(word);
+            }
+            else if (match[i] == 1 && !word.contains(String.valueOf(previousGuess.charAt(i)))) {
+               newPossibleWords.remove(word);
+            }
+            else if (match[i] == 1 && word.charAt(i) == previousGuess.charAt(i)) {
+               newPossibleWords.remove(word);
+            }
+         }
+      }
+      
+      System.out.println();
+      System.out.println();
+      System.out.println("new possible words after guessing " + previousGuess + ": ");
+      for (String word : newPossibleWords) {
+         System.out.println(word);
+      }
       
    }
-   */ 
+   
    
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -144,7 +184,10 @@ public class Wordle {
       // 6th, 7th, etc. most common letter. If there's more than 1 value in "optimalGuess", we need to figure out how to narrow it down to one best guess.
       
       
-      // this will eventually return the single most optimal guess. but until then just pick the first entry of optimalGuess
+      // this will eventually return the single most optimal guess. but until then just pick the first entry of optimalGuess, but first check to see if it's empty
+      if (optimalGuess.isEmpty()) {
+         optimalGuess.add("xxxxx");
+      }
       return optimalGuess.iterator().next();
    }
   
