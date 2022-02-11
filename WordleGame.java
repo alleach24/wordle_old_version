@@ -12,8 +12,8 @@ import java.io.FileReader;
 import java.lang.*;
 
 public class WordleGame {
-   public Set<String> wordList;
-   public String answer;
+   public static Set<String> wordList;
+   public static String answer;
   
    public static void main(String[] args) {
       // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
@@ -46,7 +46,7 @@ public class WordleGame {
       answer = keyboard.nextLine();
       // check to make sure the answer is included in the provided list
       while (true) {
-         if (!possibleWords.contains(answer)) {
+         if (!wordList.contains(answer)) {
             System.out.print("This word is not valid. Please enter a different word: ");
             answer = keyboard.nextLine();
          }
