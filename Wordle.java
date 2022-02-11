@@ -56,6 +56,7 @@ public class Wordle {
       String nextGuess = bestGuess(possibleWords);
       System.out.println();
       System.out.println("The first best guess is: " + nextGuess);
+      int guesscount = 1;
       
       while (!answer.equals(nextGuess)) {
       
@@ -75,11 +76,12 @@ public class Wordle {
          System.out.println("The next best guess is:  " + nextGuess);
          //////////////////System.out.println();
          //////////////////System.out.println("The next best guess is: " + nextGuess);
+         guesscount++;
 
       }
       
       System.out.println();
-      System.out.println("Congrats! you got the word ~" + nextGuess + "~!!!");
+      System.out.println("Congrats! you got the word '" + nextGuess + "' in " + guesscount + " guesses!!!");
          
    }
 
@@ -112,12 +114,12 @@ public class Wordle {
       }
       
       
-      ////////////////////////System.out.println();
-      ////////////////////////System.out.println("new possible words after guessing " + previousGuess + ": ");
+      System.out.println();
+      System.out.println("new possible words after guessing " + previousGuess + ": ");
       for (String word : newPossibleWords) {
-         ////////////////////////System.out.println(word);
+         System.out.println(word);
       }
-      ////////////////////////System.out.println();
+      System.out.println();
       
       return newPossibleWords;
    }
