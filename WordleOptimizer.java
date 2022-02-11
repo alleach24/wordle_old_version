@@ -51,6 +51,9 @@ public class WordleOptimizer {
       
       System.out.println();
       System.out.println("Congrats! you got the word '" + nextGuess + "' in " + guesscount + " guesses!!!");
+      System.out.println();
+      
+      //ask if they want to play again
          
    }
 
