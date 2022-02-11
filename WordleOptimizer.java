@@ -9,7 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.*;
 
-public class Wordle {
+public class WordleOptimizer {
    
    // main method
    public static void main(String[] args) throws Exception {
