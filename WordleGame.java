@@ -10,12 +10,13 @@ import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.*;
+import java.io.*;
 
 public class WordleGame {
    public static Set<String> wordList;
    public static String answer;
   
-   public static void main(String[] args) {
+   public static void main(String[] args) throws IOException {
       // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
       // initiate a new string to hold each word
       String word;
@@ -25,8 +26,15 @@ public class WordleGame {
       Scanner keyboard = new Scanner(System.in);
       System.out.print("Enter the filename for words to use: ");
       String filename = keyboard.nextLine();
-      // create a file reader using the argument input
-      FileReader file = new FileReader(filename);
+      FileReader file;
+      try {
+         // create a file reader using the argument input
+         file = new FileReader(filename);
+      } catch (FileNotFoundException fnfe) {
+         System.out.print("This file does not exist. Please enter a valid file or the game will crash: ");
+         filename = keyboard.nextLine();
+         file = new FileReader(filename);
+      }
       // create a buffered reader
       BufferedReader br = new BufferedReader(file);
       // run through each line of the file
