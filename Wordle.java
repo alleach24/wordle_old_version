@@ -28,12 +28,12 @@ public class Wordle {
       // create a buffered reader
       BufferedReader br = new BufferedReader(file);
       // run through each line of the file
-      System.out.println("These are the possible words: ");
+      ////////////////////////System.out.println("These are the possible words: ");
       while ((word = br.readLine()) != null) {
          // add the word to the Set of possible words if the word has 5 letters
          if (word.length() == 5) {
             possibleWords.add(word);
-            System.out.println(word);
+            ////////////////////////System.out.println(word);
          }
       }   
       
@@ -102,12 +102,13 @@ public class Wordle {
          }
       }
       
-      System.out.println();
+      
       System.out.println();
       System.out.println("new possible words after guessing " + previousGuess + ": ");
       for (String word : newPossibleWords) {
          System.out.println(word);
       }
+      System.out.println();
       
       return newPossibleWords;
    }
@@ -175,28 +176,56 @@ public class Wordle {
       }
       // and this sorts the map so that the lowest values are at the beginning
       letter_counts = sortByValues(letter_counts);
-      System.out.println("letter_counts: " + letter_counts);
-      
+      ///////////////////////////System.out.println("letter_counts: " + letter_counts);
+      ////////////////////System.out.println();
       
       
       HashMap<String, Double> wordValues = new HashMap<String, Double>();
       double wordValue;
+      Set<Character> set = new HashSet<Character>();
       for (String word : possibleWords) {
          wordValue = 0;
-         /////////////System.out.print(word + ": ");
-         wordValue = letter_counts.get(word.charAt(0)) + letter_counts.get(word.charAt(1)) + letter_counts.get(word.charAt(2)) + letter_counts.get(word.charAt(3)) + letter_counts.get(word.charAt(4));
-         //////////////////System.out.println(wordValue);
+         /*
+         char[] wordArray = word.toCharArray();
+         int end = wordArray.length;
+         Set<Character> wordSet = new HashSet<Character>();
+         for (int i = 0; i < end; i++) {
+            wordSet.add(wordArray[i]);
+         }
+         Character[] newstring = new Character[wordSet.size()];
+         newstring = wordSet.toArray(newstring);
+         System.out.print("word minus duplicate letters: ");
+         
+         for (int i = 0; i < newstring.length; i++) {
+            wordValue = wordValue + letter_counts.get(newstring[i]);
+         }
+         System.out.println();
+         */
+         
+         for (int i = 0; i < word.length(); i++) {
+            if (!set.contains(word.charAt(i))) {
+               wordValue = wordValue + letter_counts.get(word.charAt(i));  
+            }
+            else {
+               wordValue = wordValue + 0.5;
+            }
+            set.add(word.charAt(i));
+         }
+         //wordValue = letter_counts.get(word.charAt(0)) + letter_counts.get(word.charAt(1)) + letter_counts.get(word.charAt(2)) + letter_counts.get(word.charAt(3)) + letter_counts.get(word.charAt(4));
+         /////////////////////////////System.out.println(word + ": " + wordValue);
+         ///////////////////////////System.out.println();
+         set.clear();
          
          
          wordValues.put(word, wordValue);
       }
-      System.out.println(wordValues);
+
+      wordValues = sortByValuesString(wordValues);
+      //////////////////////System.out.println(wordValues);
       
       
       
-      
-      
-      
+      /*
       // determine the words that contain the 5 most common letters
       // instantiate a new set of optimal guesses
       Set<String> optimalGuess = new LinkedHashSet<String>();
@@ -210,16 +239,19 @@ public class Wordle {
             optimalGuess.add(word);  
          }
       }
-      
-      // NOW WHAT TO DO is try to narrow down "optimalGuess" to just one word. So if there's no values in "optimalGuess" at this point, we need to evaluate words with the 
-      // 6th, 7th, etc. most common letter. If there's more than 1 value in "optimalGuess", we need to figure out how to narrow it down to one best guess.
+      */
       
       
-      // this will eventually return the single most optimal guess. but until then just pick the first entry of optimalGuess, but first check to see if it's empty
-      if (optimalGuess.isEmpty()) {
-         optimalGuess.add("xxxxx");
-      }
-      return optimalGuess.iterator().next();
+      
+
+      // this will return the single most optimal guess (or one of them if they're tied - eventually this will have to be fixed by letter placement)
+      
+      /////////////////////  String bestGuess = wordValues.get(wordValues.keySet().iterator().next());
+      ///////////////////////System.out.println("wordValues map: " + wordValues);
+      ///////////////////////System.out.println("wordValues key Set: " + wordValues.keySet());
+      ////////////////////// System.out.println("wordValues first key: " + wordValues.keySet().iterator().next());
+      String bestGuess = wordValues.keySet().iterator().next();
+      return bestGuess;
    }
   
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -229,7 +261,7 @@ public class Wordle {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
-   // this method sorts a Map. specifically it's used to sort the letters by their likelihood of occuring in the word.
+   // this method sorts a Map<Character, Double>. specifically it's used to sort the letters by their likelihood of occuring in the word.
    public static HashMap<Character, Double> sortByValues(Map<Character, Double> letter_counts) {
       // this chunk of code sorts the letters by their value
       List<Map.Entry<Character, Double> > list = new LinkedList<Map.Entry<Character, Double> >(letter_counts.entrySet());
@@ -246,6 +278,21 @@ public class Wordle {
       return temp;
    }
    
+      // this method sorts a Map<String, Double>. specifically it's used to sort the words by their optimization value.
+   public static HashMap<String, Double> sortByValuesString(Map<String, Double> letter_counts) {
+      List<Map.Entry<String, Double> > list = new LinkedList<Map.Entry<String, Double> >(letter_counts.entrySet());
+      Collections.sort(list, new Comparator<Map.Entry<String, Double> >() {
+         public int compare(Map.Entry<String, Double> o1, Map.Entry<String, Double> o2)
+         {
+            return (o1.getValue()).compareTo(o2.getValue());
+         }
+      });
+      HashMap<String, Double> temp = new LinkedHashMap<String, Double>();
+      for (Map.Entry<String, Double> aa : list) {
+         temp.put(aa.getKey(), aa.getValue());
+      }  
+      return temp;
+   }
    
    
    
