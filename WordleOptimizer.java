@@ -14,44 +14,13 @@ public class WordleOptimizer {
    // main method
    public static void main(String[] args) throws Exception {
 
-      // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
-      // initiate a new string to hold each word
-      String word;
-      // initiate a new Set to hold all the possible words
-      Set<String> possibleWords = new HashSet<String>();
-            // create a keyboard scanner and prompt for the filename
-      Scanner keyboard = new Scanner(System.in);
-      System.out.print("Enter the filename for words to use: ");
-      String filename = keyboard.nextLine();
-            // create a file reader using the argument input
-      FileReader file = new FileReader(filename);
-      // create a buffered reader
-      BufferedReader br = new BufferedReader(file);
-      // run through each line of the file
-      ////////////////////////System.out.println("These are the possible words: ");
-      while ((word = br.readLine()) != null) {
-         // add the word to the Set of possible words if the word has 5 letters
-         if (word.length() == 5) {
-            possibleWords.add(word);
-            ////////////////////////System.out.println(word);
-         }
-      }   
-      
-      // take in the end word and set it as answer
-      System.out.println();
-      System.out.print("Enter the word to be optimized: ");
-      String answer = keyboard.nextLine();
-      // check to make sure the answer is included in the provided list
-            while (true) {
-         if (!possibleWords.contains(answer)) {
-            System.out.print("This word is not valid. Please enter a different word: ");
-            answer = keyboard.nextLine();
-         }
-         else {
-            break; }
-      }
-      
-           
+      // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
+      WordleGame mygame = new WordleGame();
+      mygame.setWordList();
+      mygame.setAnswer();
+      String answer = mygame.getAnswer();
+      Set<String> possibleWords = mygame.getWordList();
+         
       
       String nextGuess = bestGuess(possibleWords);
       System.out.println();
@@ -91,6 +60,44 @@ public class WordleOptimizer {
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /*
+   // move this to Game class?
+   public static void setUpGame() {
+      // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
+      // initiate a new string to hold each word
+      String word;
+      // initiate a new Set to hold all the possible words
+      Set<String> possibleWords = new HashSet<String>();
+            // create a keyboard scanner and prompt for the filename
+      Scanner keyboard = new Scanner(System.in);
+      System.out.print("Enter the filename for words to use: ");
+      String filename = keyboard.nextLine();
+            // create a file reader using the argument input
+      FileReader file = new FileReader(filename);
+      // create a buffered reader
+      BufferedReader br = new BufferedReader(file);
+      // run through each line of the file
+      ////////////////////////System.out.println("These are the possible words: ");
+      while ((word = br.readLine()) != null) {
+         // add the word to the Set of possible words if the word has 5 letters
+         if (word.length() == 5) {
+            possibleWords.add(word);
+            ////////////////////////System.out.println(word);
+         }
+      }   
+   }
+   */
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+   
+   
+   
+   
    
    public static Set<String> createPossibleWords(int[] match, String previousGuess, Set<String> possibleWords) {
       // create a new set of possible words
@@ -114,12 +121,12 @@ public class WordleOptimizer {
       }
       
       
-      System.out.println();
-      System.out.println("new possible words after guessing " + previousGuess + ": ");
+      ////////////////////System.out.println();
+      ////////////////////System.out.println("new possible words after guessing " + previousGuess + ": ");
       for (String word : newPossibleWords) {
-         System.out.println(word);
+         ////////////////////System.out.println(word);
       }
-      System.out.println();
+      ////////////////////System.out.println();
       
       return newPossibleWords;
    }
