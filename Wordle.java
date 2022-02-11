@@ -28,12 +28,12 @@ public class Wordle {
       // create a buffered reader
       BufferedReader br = new BufferedReader(file);
       // run through each line of the file
-      System.out.println("These are the possible words: ");
+      //////////////System.out.println("These are the possible words: ");
       while ((word = br.readLine()) != null) {
          // add the word to the Set of possible words if the word has 5 letters
          if (word.length() == 5) {
             possibleWords.add(word);
-            System.out.println(word);
+            ////////////////////System.out.println(word);
          }
       }   
       
@@ -58,7 +58,7 @@ public class Wordle {
       System.out.println();
       System.out.println("The next best guess is: " + nextGuess);
       
-      
+      // match should be 0 if the letter is not in the answer, 1 if it's in the answer but not in the right spot, and 2 if it's in the answer and in the right spot
       int[] match = new int[5];
       for (int i = 0; i < 5; i++) {
          if (nextGuess.charAt(i) == answer.charAt(i)) {
@@ -67,23 +67,21 @@ public class Wordle {
             match[i] = 1; }
       }
       
-      
-      
-      
-      for (int element : match) {
-         System.out.print(element + " ");
-      }
-      
-      createPossibleWords(match, nextGuess, possibleWords);
+            
+      possibleWords = createPossibleWords(match, nextGuess, possibleWords);
+      nextGuess = bestGuess(possibleWords);
+      System.out.println();
+      System.out.println("The next best guess is: " + nextGuess);
    }
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
    
    
-   public static void createPossibleWords(int[] match, String previousGuess, Set<String> possibleWords) {
+   public static Set<String> createPossibleWords(int[] match, String previousGuess, Set<String> possibleWords) {
+      // create a new set of possible words
       Set<String> newPossibleWords = new HashSet<String>(possibleWords);
-      
+      // apply what you learned from the last word to the new set of words and remove words that can no longer be the answer
       for (String word : possibleWords) {
          for (int i = 0; i<5; i++) {
             if (match[i] == 0 && word.contains(String.valueOf(previousGuess.charAt(i)))) {
@@ -95,16 +93,20 @@ public class Wordle {
             else if (match[i] == 1 && word.charAt(i) == previousGuess.charAt(i)) {
                newPossibleWords.remove(word);
             }
+            else if (match[i] == 2 && !(word.charAt(i) == previousGuess.charAt(i))) {
+               newPossibleWords.remove(word);
+            }
          }
       }
       
       System.out.println();
       System.out.println();
-      System.out.println("new possible words after guessing " + previousGuess + ": ");
-      for (String word : newPossibleWords) {
-         System.out.println(word);
-      }
+      ///////////System.out.println("new possible words after guessing " + previousGuess + ": ");
+      ///////////////for (String word : newPossibleWords) {
+         //////////////System.out.println(word);
+      ///////////////}
       
+      return newPossibleWords;
    }
    
    
