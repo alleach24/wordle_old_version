@@ -15,8 +15,13 @@ import java.io.*;
 public class WordleGame {
    public static Set<String> wordList;
    public static String answer;
+
   
-   public static void main(String[] args) throws IOException {
+   public static void main(String[] args) {
+      
+   }
+  
+   public void setWordList() throws IOException {
       // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
       // initiate a new string to hold each word
       String word;
@@ -45,12 +50,17 @@ public class WordleGame {
             wordList.add(word);
             ////////////////////////System.out.println(word);
          }
-      }
-     
-     
+      }   
+      
+   }
+   
+   
+   
+   public void setAnswer() {
      // take in the end word and set it as answer
       System.out.println();
       System.out.print("Enter the word to be optimized: ");
+      Scanner keyboard = new Scanner(System.in);
       answer = keyboard.nextLine();
       // check to make sure the answer is included in the provided list
       while (true) {
@@ -61,9 +71,7 @@ public class WordleGame {
          else {
             break; }
       }
-   }
-  
-  
+  }
   
   public String getAnswer() {
     return answer;
