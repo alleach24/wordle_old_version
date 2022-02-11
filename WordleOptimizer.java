@@ -16,6 +16,8 @@ public class WordleOptimizer {
 
       // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
       WordleGame mygame = new WordleGame();
+      mygame.setWordList();
+      mygame.setAnswer();
       String answer = mygame.getAnswer();
       Set<String> possibleWords = mygame.getWordList();
          
