@@ -18,10 +18,13 @@ public class WordleGame {
    public static String answer;
 
   
+   
    public static void main(String[] args) {
       
    }
   
+   
+   
    public void setWordLists() throws IOException {
       // CREATE THE LIST OF POSSIBLE GUESSES USING THE PROVIDED FILE
       // initiate a new string to hold each word
@@ -52,9 +55,7 @@ public class WordleGame {
             ////////////////////////System.out.println(word);
          }
       }   
-      
-      
-      
+            
       guessWordList = new HashSet<String>();
       System.out.println();
       System.out.print("Enter the filename for the guesses word bank: ");
@@ -78,7 +79,8 @@ public class WordleGame {
    
    
    
-   public void setAnswer() {
+   
+   public void setKnownAnswer() {
      // take in the end word and set it as answer
       System.out.println();
       System.out.print("Enter the word to be optimized: ");
@@ -95,6 +97,13 @@ public class WordleGame {
       }
   }
   
+   
+  public void setUnknownAnswer() {
+      // pick a random word as the answer
+  }
+   
+   
+   
   public String getAnswer() {
     return answer;
   }
