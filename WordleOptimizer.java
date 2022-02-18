@@ -27,7 +27,6 @@ public class WordleOptimizer {
       
       
       Set<String> possibleGuessWords;
-      //Set<String> alteredPossibleGuessWords;
       String answer;
       
       WordleGame mygame = new WordleGame();
@@ -37,8 +36,7 @@ public class WordleOptimizer {
          mygame.setAnswer();
          answer = mygame.getAnswer();
          possibleGuessWords = mygame.getGuessWordList();
-         //Set<String> possibleSolutionWords = mygame.getSolutionWordList();
-
+         
          String nextGuess = bestGuess(possibleGuessWords);
          System.out.println();
          System.out.println("The first best guess is: " + nextGuess);
@@ -192,23 +190,7 @@ public class WordleOptimizer {
       Set<Character> set = new HashSet<Character>();
       for (String word : possibleWords) {
          wordValue = 0;
-         /*
-         char[] wordArray = word.toCharArray();
-         int end = wordArray.length;
-         Set<Character> wordSet = new HashSet<Character>();
-         for (int i = 0; i < end; i++) {
-            wordSet.add(wordArray[i]);
-         }
-         Character[] newstring = new Character[wordSet.size()];
-         newstring = wordSet.toArray(newstring);
-         System.out.print("word minus duplicate letters: ");
-         
-         for (int i = 0; i < newstring.length; i++) {
-            wordValue = wordValue + letter_counts.get(newstring[i]);
-         }
-         System.out.println();
-         */
-         
+                  
          for (int i = 0; i < word.length(); i++) {
             if (!set.contains(word.charAt(i))) {
                wordValue = wordValue + letter_counts.get(word.charAt(i));  
@@ -218,7 +200,6 @@ public class WordleOptimizer {
             }
             set.add(word.charAt(i));
          }
-         //wordValue = letter_counts.get(word.charAt(0)) + letter_counts.get(word.charAt(1)) + letter_counts.get(word.charAt(2)) + letter_counts.get(word.charAt(3)) + letter_counts.get(word.charAt(4));
          /////////////////////////////System.out.println(word + ": " + wordValue);
          ///////////////////////////System.out.println();
          set.clear();
@@ -229,25 +210,6 @@ public class WordleOptimizer {
 
       wordValues = sortByValuesString(wordValues);
       //////////////////////System.out.println(wordValues);
-      
-      
-      
-      /*
-      // determine the words that contain the 5 most common letters
-      // instantiate a new set of optimal guesses
-      Set<String> optimalGuess = new LinkedHashSet<String>();
-      // put the most common letters into an array for easy access
-      Character[] commonLetters = new Character[(letter_counts.keySet()).size()];
-      commonLetters = (letter_counts.keySet()).toArray(commonLetters);
-      // determine which of all the possible words has the 5 most common letters           
-      for (String word : possibleWords) {
-         if ( word.contains(String.valueOf(commonLetters[0])) && word.contains(String.valueOf(commonLetters[1])) && word.contains(String.valueOf(commonLetters[2])) && 
-             word.contains(String.valueOf(commonLetters[3])) && word.contains(String.valueOf(commonLetters[4])) ) {
-            optimalGuess.add(word);  
-         }
-      }
-      */
-      
       
       
 
