@@ -29,16 +29,16 @@ public class WordleGame {
       wordList = new HashSet<String>();
       // create a keyboard scanner and prompt for the filename
       Scanner keyboard = new Scanner(System.in);
-      System.out.print("Enter the filename for words to use: ");
-      String filename = keyboard.nextLine();
+      System.out.print("Enter the filename for the solution word bank: ");
+      String solutionfilename = keyboard.nextLine();
       FileReader file;
       try {
          // create a file reader using the argument input
-         file = new FileReader(filename);
+         file = new FileReader(solutionfilename);
       } catch (FileNotFoundException fnfe) {
          System.out.print("This file does not exist. Please enter a valid file or the game will crash: ");
-         filename = keyboard.nextLine();
-         file = new FileReader(filename);
+         solutionfilename = keyboard.nextLine();
+         file = new FileReader(solutionfilename);
       }
       // create a buffered reader
       BufferedReader br = new BufferedReader(file);
