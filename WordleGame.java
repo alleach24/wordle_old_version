@@ -13,7 +13,8 @@ import java.lang.*;
 import java.io.*;
 
 public class WordleGame {
-   public static Set<String> wordList;
+   public static Set<String> guessWordList;
+   public static Set<String> solutionWordList;
    public static String answer;
 
   
@@ -21,36 +22,57 @@ public class WordleGame {
       
    }
   
-   public void setWordList() throws IOException {
-      // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
+   public void setWordLists() throws IOException {
+      // CREATE THE LIST OF POSSIBLE GUESSES USING THE PROVIDED FILE
       // initiate a new string to hold each word
       String word;
       // initiate a new Set to hold all the possible words
-      wordList = new HashSet<String>();
+      solutionWordList = new HashSet<String>();
       // create a keyboard scanner and prompt for the filename
       Scanner keyboard = new Scanner(System.in);
       System.out.print("Enter the filename for the solution word bank: ");
       String solutionfilename = keyboard.nextLine();
-      FileReader file;
+      FileReader file1;
       try {
          // create a file reader using the argument input
-         file = new FileReader(solutionfilename);
+         file1 = new FileReader(solutionfilename);
       } catch (FileNotFoundException fnfe) {
          System.out.print("This file does not exist. Please enter a valid file or the game will crash: ");
          solutionfilename = keyboard.nextLine();
-         file = new FileReader(solutionfilename);
+         file1 = new FileReader(solutionfilename);
       }
       // create a buffered reader
-      BufferedReader br = new BufferedReader(file);
+      BufferedReader br1 = new BufferedReader(file1);
       // run through each line of the file
       ////////////////////////System.out.println("These are the possible words: ");
-      while ((word = br.readLine()) != null) {
+      while ((word = br1.readLine()) != null) {
          // add the word to the Set of possible words if the word has 5 letters
          if (word.length() == 5) {
-            wordList.add(word);
+            solutionWordList.add(word);
             ////////////////////////System.out.println(word);
          }
       }   
+      
+      
+      
+      guessWordList = new HashSet<String>();
+      System.out.println();
+      System.out.print("Enter the filename for the guesses word bank: ");
+      String guessfilename = keyboard.nextLine();
+      FileReader file2;
+      try {
+         file2 = new FileReader(guessfilename);
+      } catch (FileNotFoundException fnfe) {
+         System.out.print("This file does not exist. Please enter a valid file or the game will crash: ");
+         guessfilename = keyboard.nextLine();
+         file2 = new FileReader(guessfilename);
+      }
+      BufferedReader br2 = new BufferedReader(file2);
+      while ((word = br2.readLine()) != null) {
+         if (word.length() == 5) {
+            guessWordList.add(word);
+         }
+      }
       
    }
    
@@ -64,8 +86,8 @@ public class WordleGame {
       answer = keyboard.nextLine();
       // check to make sure the answer is included in the provided list
       while (true) {
-         if (!wordList.contains(answer)) {
-            System.out.print("This word is not valid. Please enter a different word: ");
+         if (!solutionWordList.contains(answer)) {
+            System.out.print("This word is not a valid solution. Please enter a different word: ");
             answer = keyboard.nextLine();
          }
          else {
@@ -77,9 +99,12 @@ public class WordleGame {
     return answer;
   }
   
-  public Set<String> getWordList() {
-    return wordList;
+  public Set<String> getSolutionWordList() {
+    return solutionWordList;
   }
   
+   public Set<String> getGuessWordList() {
+    return guessWordList;
+  }
   
 }
