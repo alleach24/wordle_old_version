@@ -33,7 +33,7 @@ public class WordleOptimizer {
       mygame.setWordLists();
       while (play) {
                  
-         mygame.setAnswer();
+         mygame.setKnownAnswer();
          answer = mygame.getAnswer();
          possibleGuessWords = mygame.getGuessWordList();
          
