@@ -16,4 +16,5 @@ Text Files:
 Future things to do:
 1) WordleOptimizer.java:
     - factor in letter placement when determining the optimal word
+2) build a program that recreates the game itself for the user to play
 
