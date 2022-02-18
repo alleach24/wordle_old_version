@@ -108,6 +108,7 @@ public class WordleGame {
      for (String word : solutionWordList) {
          if (currindx == rndmindx) {
             answer = word;
+            System.out.println(answer);
             return;
          }            
          currindx++;
