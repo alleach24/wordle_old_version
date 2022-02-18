@@ -11,7 +11,7 @@ import java.io.*;
 
 public class WordlePlay {
   
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
       // create a boolean that you want to play a game
       boolean play = false;
       
@@ -29,7 +29,8 @@ public class WordlePlay {
     String answer;
     String guess;
     int[] eval;
-    int count;
+    int count = 0;
+    int[] gotIt = new int[]{2,2,2,2,2};
     
     while (play) {
       mygame.setUnknownAnswer();
@@ -43,7 +44,7 @@ public class WordlePlay {
       eval = evaluateGuess(answer, guess);
       printResults(guess, eval);
       
-      while (eval != [2, 2, 2, 2, 2]) {
+      while (!(eval.equals(gotIt))) {
         System.out.print("Enter your next guess: ");
         guess = keyboard.nextLine();
         count++;
@@ -53,19 +54,35 @@ public class WordlePlay {
       
       System.out.println();
       System.out.println("Congrats, you guessed the word! It took you " + count + " guesses to guess the word " + answer + "!");
+      System.out.println();
+      System.out.println();
+      
+      System.out.print("Do you want to play again? y/n: ");
+      if (!(keyboard.nextLine().equals("y")) || !(keyboard.nextLine().equals("Y"))) {
+        play = false;    
+      }
+      else {
+        System.out.println();
+        System.out.println("Okay let's play again!");
+      }
+    }
+      
   }
   
   
   public static int[] evaluateGuess(String answer, String guess) {
-    char[] answerArr = answer.toArray();
-    char[] guessArr = guess.toArray();
+    //char[] answerArr = answer.toArray();
+    //char[] guessArr = guess.toArray();
     int[] eval = new int[5];
       
     for (int i = 0; i<5; i++) {
-      if (answerArr[i] == guessArr[i]) {
+      if (answer.charAt(i) == guess.charAt(i)) {
+        //////////////System.out.println(answer.charAt(i));
+        ///////////////System.out.println(guess.charAt(i));
+        //////////////System.out.println(answer.charAt(i) == guess.charAt(i));
         eval[i] = 2;
       }
-      else if (answer.contains(Character.valueOf(guessArr[i]))) {
+      else if (answer.contains(Character.toString(guess.charAt(i)))) {
         eval[i] = 1;
       }
       else {
@@ -73,28 +90,33 @@ public class WordlePlay {
       }
     }
     
+    
+    ///////////////////System.out.println(eval);
+    
     return eval;
   }
   
   
   public static void printResults(String guess, int[] eval) {
-   
-    for (number : eval) {
+    System.out.println();
+    for (int number : eval) {
       if (number == 0) {
         System.out.print("x  ");
       }
       else if (number == 1) {
-        System.out.print("○  ");
+        System.out.print("o  ");
       }
       else {
-        System.out.print("♥  ");
+        System.out.print("^  ");
       }
+    }  
+    System.out.println();
       
-      System.out.println();
-      
-      for (letter : guess) {
-      System.out.print(letter + "  ");
+    for (int i = 0; i < 5; i++) {
+      System.out.print(guess.charAt(i) + "  ");
     }
+    System.out.println();
+    System.out.println();
   }
   
   
