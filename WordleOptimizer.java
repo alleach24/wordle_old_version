@@ -21,16 +21,19 @@ public class WordleOptimizer {
       String playString = keyboard.nextLine();
       if (playString.equals("y") || playString.equals("Y")) {
          play = true;
-      } // maybe eventually add functionality for someone typing something other than "y"
+      } else {
+         System.exit(0);
+      } // maybe eventually add functionality for someone typing something other than "y" or "n"
+      
       
       Set<String> possibleGuessWords;
+      //Set<String> alteredPossibleGuessWords;
       String answer;
-      Set<String> possibleWords;
       
+      WordleGame mygame = new WordleGame();
+      mygame.setWordLists();
       while (play) {
-         // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
-         WordleGame mygame = new WordleGame();
-         mygame.setWordList();
+                 
          mygame.setAnswer();
          answer = mygame.getAnswer();
          possibleGuessWords = mygame.getGuessWordList();
@@ -53,8 +56,8 @@ public class WordleOptimizer {
             }
 
 
-            possibleWords = createPossibleWords(match, nextGuess, possibleGuessWords);
-            nextGuess = bestGuess(possibleWords);
+            possibleGuessWords = createPossibleWords(match, nextGuess, possibleGuessWords);
+            nextGuess = bestGuess(possibleGuessWords);
             //////////////////System.out.println();
             System.out.println("The next best guess is:  " + nextGuess);
             //////////////////System.out.println();
