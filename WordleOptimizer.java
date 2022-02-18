@@ -23,16 +23,20 @@ public class WordleOptimizer {
          play = true;
       } // maybe eventually add functionality for someone typing something other than "y"
       
+      Set<String> possibleGuessWords;
+      String answer;
+      Set<String> possibleWords;
+      
       while (play) {
          // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
          WordleGame mygame = new WordleGame();
          mygame.setWordList();
          mygame.setAnswer();
-         String answer = mygame.getAnswer();
-         Set<String> possibleWords = mygame.getWordList();
+         answer = mygame.getAnswer();
+         possibleGuessWords = mygame.getGuessWordList();
+         //Set<String> possibleSolutionWords = mygame.getSolutionWordList();
 
-
-         String nextGuess = bestGuess(possibleWords);
+         String nextGuess = bestGuess(possibleGuessWords);
          System.out.println();
          System.out.println("The first best guess is: " + nextGuess);
          int guesscount = 1;
@@ -49,7 +53,7 @@ public class WordleOptimizer {
             }
 
 
-            possibleWords = createPossibleWords(match, nextGuess, possibleWords);
+            possibleWords = createPossibleWords(match, nextGuess, possibleGuessWords);
             nextGuess = bestGuess(possibleWords);
             //////////////////System.out.println();
             System.out.println("The next best guess is:  " + nextGuess);
