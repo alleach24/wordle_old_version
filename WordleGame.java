@@ -57,7 +57,7 @@ public class WordleGame {
       }   
             
       guessWordList = new HashSet<String>();
-      System.out.println();
+      // System.out.println();
       System.out.print("Enter the filename for the guesses word bank: ");
       String guessfilename = keyboard.nextLine();
       FileReader file2;
