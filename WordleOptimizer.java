@@ -13,91 +13,70 @@ public class WordleOptimizer {
    
    // main method
    public static void main(String[] args) throws Exception {
-
-      // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
-      WordleGame mygame = new WordleGame();
-      mygame.setWordList();
-      mygame.setAnswer();
-      String answer = mygame.getAnswer();
-      Set<String> possibleWords = mygame.getWordList();
-         
+      // create a boolean that you want to play a game
+      boolean play = false;
       
-      String nextGuess = bestGuess(possibleWords);
-      System.out.println();
-      System.out.println("The first best guess is: " + nextGuess);
-      int guesscount = 1;
-      
-      while (!answer.equals(nextGuess)) {
-      
-         // match should be 0 if the letter is not in the answer, 1 if it's in the answer but not in the right spot, and 2 if it's in the answer and in the right spot
-         int[] match = new int[5];
-         for (int i = 0; i < 5; i++) {
-            if (nextGuess.charAt(i) == answer.charAt(i)) {
-               match[i] = 2; }
-            else if (answer.contains(String.valueOf(nextGuess.charAt(i)))) {
-               match[i] = 1; }
-         }
-
-
-         possibleWords = createPossibleWords(match, nextGuess, possibleWords);
-         nextGuess = bestGuess(possibleWords);
-         //////////////////System.out.println();
-         System.out.println("The next best guess is:  " + nextGuess);
-         //////////////////System.out.println();
-         //////////////////System.out.println("The next best guess is: " + nextGuess);
-         guesscount++;
-
-      }
-      
-      System.out.println();
-      System.out.println("Congrats! you got the word '" + nextGuess + "' in " + guesscount + " guesses!!!");
-      System.out.println();
-      
-      //ask if they want to play again
-         
-   }
-
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   /*
-   // move this to Game class?
-   public static void setUpGame() {
-      // CREATE THE FIRST LIST OF POSSIBLE LETTERS USING THE PROVIDED LIST
-      // initiate a new string to hold each word
-      String word;
-      // initiate a new Set to hold all the possible words
-      Set<String> possibleWords = new HashSet<String>();
-            // create a keyboard scanner and prompt for the filename
       Scanner keyboard = new Scanner(System.in);
-      System.out.print("Enter the filename for words to use: ");
-      String filename = keyboard.nextLine();
-            // create a file reader using the argument input
-      FileReader file = new FileReader(filename);
-      // create a buffered reader
-      BufferedReader br = new BufferedReader(file);
-      // run through each line of the file
-      ////////////////////////System.out.println("These are the possible words: ");
-      while ((word = br.readLine()) != null) {
-         // add the word to the Set of possible words if the word has 5 letters
-         if (word.length() == 5) {
-            possibleWords.add(word);
-            ////////////////////////System.out.println(word);
+      System.out.print("Do you want to optimize a word? y/n: ");
+      String playString = keyboard.nextLine();
+      if (playString.equals("y") || playString.equals("Y")) {
+         play = true;
+      } // maybe eventually add functionality for someone typing something other than "y"
+      
+      while (play) {
+         // CREATE A NEW GAME OBJECT HEREEEEEEEEEEEEEEE
+         WordleGame mygame = new WordleGame();
+         mygame.setWordList();
+         mygame.setAnswer();
+         String answer = mygame.getAnswer();
+         Set<String> possibleWords = mygame.getWordList();
+
+
+         String nextGuess = bestGuess(possibleWords);
+         System.out.println();
+         System.out.println("The first best guess is: " + nextGuess);
+         int guesscount = 1;
+
+         while (!answer.equals(nextGuess)) {
+
+            // match should be 0 if the letter is not in the answer, 1 if it's in the answer but not in the right spot, and 2 if it's in the answer and in the right spot
+            int[] match = new int[5];
+            for (int i = 0; i < 5; i++) {
+               if (nextGuess.charAt(i) == answer.charAt(i)) {
+                  match[i] = 2; }
+               else if (answer.contains(String.valueOf(nextGuess.charAt(i)))) {
+                  match[i] = 1; }
+            }
+
+
+            possibleWords = createPossibleWords(match, nextGuess, possibleWords);
+            nextGuess = bestGuess(possibleWords);
+            //////////////////System.out.println();
+            System.out.println("The next best guess is:  " + nextGuess);
+            //////////////////System.out.println();
+            guesscount++;
+
          }
-      }   
+
+         System.out.println();
+         System.out.println("Congrats! you got the word '" + nextGuess + "' in " + guesscount + " guesses!!!");
+         System.out.println();
+         
+         System.out.print("Would you like to go again? y/n: ");
+         playString = keyboard.nextLine();
+         if (playString.equals("n") || playString.equals("N")) {
+            play = false;
+         }
+      } 
+         
    }
-   */
-      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
-   
+   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
    
    
    
