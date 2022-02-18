@@ -100,6 +100,19 @@ public class WordleGame {
    
   public void setUnknownAnswer() {
       // pick a random word as the answer
+     int size = solutionWordList.size();
+     
+     int currindx = 0;
+     int rndmindx = new Random().nextInt(size);
+     
+     for (String word : solutionWordList) {
+         if (currindx == rndmindx) {
+            answer = word;
+            return;
+         }            
+         currindx++;
+     }
+     answer = "zzzzz";
   }
    
    
