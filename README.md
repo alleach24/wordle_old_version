@@ -9,7 +9,8 @@ Programs:
 Text Files:
 1) words_alpha.txt >> text file that contains all words in the English dictionary
 2) words_alpha_test.txt >> a smaller list of random words in the English dictionary for testing purposes
-3) words_wordle.txt >> a list of possible words that Wordle uses to pick from
+3) wordle_solutions.txt >> a list of possible solutions that Wordle uses
+4) wordle_guesses.txt >> a list of valid guesses according to Wordle
 
 
 Future things to do:
