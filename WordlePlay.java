@@ -26,39 +26,45 @@ public class WordlePlay {
     
     WordleGame mygame = new WordleGame();
     mygame.setWordLists();
+    
     String answer;
     String guess;
     int[] eval;
     int count = 0;
     int[] gotIt = new int[]{2,2,2,2,2};
+    Set<String> validGuesses = mygame.getGuessWordList();
+    
+    System.out.printf("%n%nAnswer Key:%nx = this letter does not appear in the answer%no = this letter appears in the answer in a different spot%n^ = this letter appears in the correct spot");
     
     while (play) {
       mygame.setUnknownAnswer();
       answer = mygame.getAnswer();
       
       
-      System.out.print("Enter your first guess: ");
+      System.out.printf("%n%nEnter your first guess: ");
       guess = keyboard.nextLine();
+      guess = checkWord(guess, validGuesses);
       count++;
       
       eval = evaluateGuess(answer, guess);
       printResults(guess, eval);
       
-      while (!(eval.equals(gotIt))) {
+      while (!(Arrays.equals(eval,gotIt))) {
         System.out.print("Enter your next guess: ");
         guess = keyboard.nextLine();
+        guess = checkWord(guess, validGuesses);
         count++;
         eval = evaluateGuess(answer,guess);
         printResults(guess,eval);
       }
       
-      System.out.println();
-      System.out.println("Congrats, you guessed the word! It took you " + count + " guesses to guess the word " + answer + "!");
-      System.out.println();
-      System.out.println();
+
+      System.out.printf("%nCongrats, you guessed the word! It took you " + count + " guesses to guess the word " + answer + "!%n%n");
+
       
       System.out.print("Do you want to play again? y/n: ");
-      if (!(keyboard.nextLine().equals("y")) || !(keyboard.nextLine().equals("Y"))) {
+      playString = keyboard.nextLine();
+      if (playString.equals("n") || playString.equals("N")) {
         play = false;    
       }
       else {
@@ -66,7 +72,19 @@ public class WordlePlay {
         System.out.println("Okay let's play again!");
       }
     }
-      
+  }
+  
+  
+  public static String checkWord(String guess, Set<String> validGuesses) {
+    boolean valid = validGuesses.contains(guess);
+    Scanner keyboard = new Scanner(System.in);
+    while (!valid) {
+      System.out.println("This is not a valid guess.");
+      System.out.print("Please enter a new guess: ");
+      guess = keyboard.nextLine();
+      valid = validGuesses.contains(guess);
+    }  
+    return guess;
   }
   
   
@@ -99,6 +117,11 @@ public class WordlePlay {
   
   public static void printResults(String guess, int[] eval) {
     System.out.println();
+    
+    for (int i = 0; i < 5; i++) {
+      System.out.print(guess.charAt(i) + "  ");
+    }
+    System.out.println();
     for (int number : eval) {
       if (number == 0) {
         System.out.print("x  ");
@@ -110,11 +133,9 @@ public class WordlePlay {
         System.out.print("^  ");
       }
     }  
-    System.out.println();
+    
       
-    for (int i = 0; i < 5; i++) {
-      System.out.print(guess.charAt(i) + "  ");
-    }
+    
     System.out.println();
     System.out.println();
   }
