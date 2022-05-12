@@ -32,9 +32,9 @@ public class WordleGame {
       // initiate a new Set to hold all the possible words
       solutionWordList = new HashSet<String>();
       // create a keyboard scanner and prompt for the filename
-      Scanner keyboard = new Scanner(System.in);
-      System.out.print("Enter the filename for the solution word bank: ");
-      String solutionfilename = keyboard.nextLine();
+      /////////////Scanner keyboard = new Scanner(System.in);
+      /////////////System.out.print("Enter the filename for the solution word bank: ");
+      String solutionfilename = "wordle_solutions.txt";
       FileReader file1;
       try {
          // create a file reader using the argument input
@@ -58,8 +58,8 @@ public class WordleGame {
             
       guessWordList = new HashSet<String>();
       // System.out.println();
-      System.out.print("Enter the filename for the guesses word bank: ");
-      String guessfilename = keyboard.nextLine();
+      ///////////////System.out.print("Enter the filename for the guesses word bank: ");
+      String guessfilename = "wordle_guesses.txt";
       FileReader file2;
       try {
          file2 = new FileReader(guessfilename);
