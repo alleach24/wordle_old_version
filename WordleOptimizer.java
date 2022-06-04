@@ -31,7 +31,7 @@ public class WordleOptimizer {
       playString = keyboard.nextLine();
       if (playString.equals("H") || playString.equals("E")) {
          hard = true;
-         System.out.print("Playing in hard mode.")
+         System.out.print("Playing in hard mode.");
       } else if (playString.equals("E") || playstring.equals("e")) {
          System.out.print("Playing in easy mode");
       } else {
