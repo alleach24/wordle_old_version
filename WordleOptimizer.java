@@ -27,7 +27,7 @@ public class WordleOptimizer {
       
       // add a functionality for hard mode vs easy mode
       Boolean hard = false;
-      System.out.print('Do you want to play on "hard" mode (must maintain known letters) or "easy" mode (can guess any number of letters)? H = hard, E = easy: ');
+      System.out.print("Do you want to play on hard mode (must maintain known letters) or easy mode (can guess any number of letters)? H = hard, E = easy: ");
       playString = keyboard.nextLine();
       if (playString.equals("H") || playString.equals("E")) {
          hard = true;
