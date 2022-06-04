@@ -32,7 +32,7 @@ public class WordleOptimizer {
       if (playString.equals("H") || playString.equals("E")) {
          hard = true;
          System.out.print("Playing in hard mode.");
-      } else if (playString.equals("E") || playstring.equals("e")) {
+      } else if (playString.equals("E") || playString.equals("e")) {
          System.out.print("Playing in easy mode");
       } else {
          System.out.print("By default, you will be playing in easy mode.");
