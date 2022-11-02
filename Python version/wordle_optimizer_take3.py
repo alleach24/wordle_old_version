@@ -1,4 +1,4 @@
-import time
+# import time
 from statistics import pstdev
 
 starting_possible_solutions_file = open("../Text files/wordle_solutions.txt", "r")
@@ -16,6 +16,8 @@ for i in range(0, len(possible_guesses_list)):
     possible_guesses_list[i] = [*word]
 possible_guesses_file.close()
 
+
+guesses = []
 
 
 
@@ -201,15 +203,16 @@ def play(ans,possible_solutions_list,special_run):
         else:
             print(f"There are {len(best_guess)} equally optimal guesses. Here's one of them: '{best_guess[0]}'.")
             
-    guess = [*input(f"\nEnter your guess: ").lower()]
+    guess = input(f"\nEnter your guess: ").lower()
     while not validate_input(guess, 'guess'):
         print("Invalid guess.")
         guess = input(f"Please enter a different guess: ")
+    guesses.append(guess)
     guess = [*guess]
 
     if guess == ans:
         print("\nCongratulations, you've solved the word!")
-        return
+        return 
     else:
         new_possible_solutions_list = determine_possible_solutions(guess,ans,possible_solutions_list)
         if len(new_possible_solutions_list) == 2:
@@ -235,8 +238,10 @@ def main():
     print(f"The optimal guess is: 'roate'.")
     play(ans, starting_possible_solutions_list,True)
     
+    print("Your guesses:")
+    for i in range(1,len(guesses)+1):
+        print(f"{i}. {guesses[i-1]}")
         
-
 
 
 main()
