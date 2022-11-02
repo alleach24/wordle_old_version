@@ -52,6 +52,7 @@ def build_color_code(guess, solution):
     # print(color_code_arr)
     return ''.join(color_code_arr)
 
+
 def evaluate_word(guess, possible_solutions_list):
     buckets = {'00000': 0, '00001': 0, '00002': 0, '00010': 0, '00011': 0, '00012': 0, 
     '00020': 0, '00021': 0, '00022': 0, '00100': 0, '00101': 0, '00102': 0, '00110': 0, 
@@ -96,32 +97,35 @@ def evaluate_word(guess, possible_solutions_list):
     # print(buckets)
     return buckets
 
+
 def calculate_std_dev(buckets):
     std_dev = pstdev(list(buckets.values()))
     # print(std_dev)
     return std_dev
+
 
 def find_optimal_words(possible_solutions_list):
     std_devs = {}
     for guess in possible_guesses_list:
         std_devs[''.join(guess)] = calculate_std_dev(evaluate_word(guess, possible_solutions_list))
     min_std_dev = min(std_devs.values())
-    best_guesses = {word for word in std_devs if std_devs[word] == min_std_dev}
+    best_guesses = [word for word in std_devs if std_devs[word] == min_std_dev]
     # print(f"The minimum standard deviation is {min_std_dev}")
     # print(f"The optimal words to guess are {best_guesses}")
     return best_guesses
 
 
 def evaluate_potential_solution(guess,word, color_dict):
-    input(">")
-    print(f"word : {word}")
+    # input(">")
+    # print(f"word : {word}")
+    # color dict example: {'d':[(0,'2')], 'o':[(1,'2')], 'g':[(2,'0'),(3,'2')], 'y':[(4,'2')]}
     
     for letter in color_dict:
         # print(letter)
         match len(color_dict[letter]):
             #only one occurrence of the letter in guess
             case 1:
-                print(letter+'1')
+                # print(letter+'1')
                 if color_dict[letter][0][1] == '2':
                     if guess[color_dict[letter][0][0]] != word [color_dict[letter][0][0]]:
                         return False
@@ -134,17 +138,16 @@ def evaluate_potential_solution(guess,word, color_dict):
                     if guess[color_dict[letter][0][0]] == word [color_dict[letter][0][0]]:
                         return False
             #multiple occurrences of the letter in guess
+            ### THIS STILL NEEDS WORK
             case _:
                 for i in range(0,len(color_dict[letter])):
-                    print(letter+str(i))
+                    # print(letter+str(i))
                     if color_dict[letter][i][1] == '2':
                         if guess[color_dict[letter][i][0]] != word [color_dict[letter][i][0]]:
                             return False
                     elif color_dict[letter][0][1] == '0':
                         if guess[color_dict[letter][i][0]] == word [color_dict[letter][i][0]]:
                             return False
-                        
-
 
     return True
 
@@ -152,47 +155,86 @@ def evaluate_potential_solution(guess,word, color_dict):
 def determine_possible_solutions(guess, ans, possible_solutions):
     new_possible_solutions = []
     color_code = [*build_color_code(guess, ans)]
-    # print(f"guess: {guess}")
-    # print(f"answe: {ans}")
-    print(color_code)
     color_dict = {letter : [] for letter in guess}
     for i in range(0,5):
         color_dict[guess[i]].append((i,color_code[i]))
-    print(color_dict)
+    # print(color_dict)
 
     for word in possible_solutions:
         if evaluate_potential_solution(guess,word,color_dict):
-            print("included")
-            print(''.join(word))
+            # print("included")
+            # print(''.join(word))
             new_possible_solutions.append(word)
         
-    print(f"There are now {len(new_possible_solutions)} possible solutions")
     # print(new_possible_solutions)
     return new_possible_solutions
 
 
+def validate_input(word, use):
+    match use:
+        case 'guess':
+            if len(word) != 5:
+                print("word not 5 letters long")
+                return False
+            else:
+                if [*word] not in possible_guesses_list:
+                    print("word not in valid solutions lst")
+                    return False
+            return True
+        case 'solution':
+            if len(word) != 5:
+                print("word not 5 letters long")
+                return False
+            else:
+                if [*word] not in starting_possible_solutions_list:
+                    print("word not in valid solutions lst")
+                    return False
+            return True
+
+
+def play(ans,possible_solutions_list,special_run):
+
+    if not special_run:
+        best_guess = find_optimal_words(possible_solutions_list)
+        if len(best_guess) == 1:
+            print(f"The optimal guess is: {''.join(best_guess)}")
+        else:
+            print(f"There are {len(best_guess)} equally optimal guesses. Here's one of them: '{best_guess[0]}'.")
+            
+    guess = [*input(f"\nEnter your guess: ").lower()]
+    while not validate_input(guess, 'guess'):
+        print("Invalid guess.")
+        guess = input(f"Please enter a different guess: ")
+    guess = [*guess]
+
+    if guess == ans:
+        print("\nCongratulations, you've solved the word!")
+        return
+    else:
+        new_possible_solutions_list = determine_possible_solutions(guess,ans,possible_solutions_list)
+        if len(new_possible_solutions_list) == 2:
+            print(f"There are only two possible solutions left: '{''.join(new_possible_solutions_list[0])}' or '{''.join(new_possible_solutions_list[1])}'.")
+            play(ans,new_possible_solutions_list, True)
+        elif len(new_possible_solutions_list) == 1:
+            print(f"There is only one possble solution left: '{''.join(new_possible_solutions_list[0])}'.")
+            play(ans,new_possible_solutions_list, True)
+        else:
+            print(f"There are now {len(new_possible_solutions_list)} possible solutions.")
+            
+            play(ans,new_possible_solutions_list, False)
+
+
 def main():
     print(f"\nWelcome to the Wordle Optimizer!\n")
-    print(f"There are now {len(starting_possible_solutions_list)} possible solutions")
-    ans = [*input(f"Enter the word to be optimized: ").lower()]
+    ans = input(f"Enter the word to be optimized: ").lower()
+    while not validate_input(ans,'solution'):
+        print("Invalid solution word.")
+        ans = input(f"Please enter a new word to be optimized: ").lower()
+    ans = [*ans]
 
-    possible_solutions_list = starting_possible_solutions_list
-    # best_guess = find_optimal_words(starting_possible_solutions_list)
-    print(f"The optimal guess is: roate")#{best_guess}")
-    solved = False
-    while not solved:
-        bread = input(">")
-        guess = [*input(f"Enter your next guess: ").lower()]
-        if guess == ans:
-            solved = True
-            print("You've solved the word!")
-            break
-
-        
-        possible_solutions_list = determine_possible_solutions(guess,ans,possible_solutions_list)
-        best_guess = find_optimal_words(possible_solutions_list)
-        print(f"The optimal guess is: {best_guess}")
-
+    print(f"The optimal guess is: 'roate'.")
+    play(ans, starting_possible_solutions_list,True)
+    
         
 
 
