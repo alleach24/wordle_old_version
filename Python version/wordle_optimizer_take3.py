@@ -117,55 +117,13 @@ def find_optimal_words(possible_solutions_list):
     return best_guesses
 
 
-def evaluate_potential_solution(guess,word, color_dict):
-    # input(">")
-    # print(f"word : {word}")
-    # color dict example: {'d':[(0,'2')], 'o':[(1,'2')], 'g':[(2,'0'),(3,'2')], 'y':[(4,'2')]}
-    
-    for letter in color_dict:
-        # print(letter)
-        match len(color_dict[letter]):
-            #only one occurrence of the letter in guess
-            case 1:
-                # print(letter+'1')
-                if color_dict[letter][0][1] == '2':
-                    if guess[color_dict[letter][0][0]] != word [color_dict[letter][0][0]]:
-                        return False
-                elif color_dict[letter][0][1] == '0':
-                    if guess[color_dict[letter][0][0]] in word:
-                        return False
-                else:
-                    if guess[color_dict[letter][0][0]] not in word:
-                        return False
-                    if guess[color_dict[letter][0][0]] == word [color_dict[letter][0][0]]:
-                        return False
-            #multiple occurrences of the letter in guess
-            ### THIS STILL NEEDS WORK
-            case _:
-                for i in range(0,len(color_dict[letter])):
-                    # print(letter+str(i))
-                    if color_dict[letter][i][1] == '2':
-                        if guess[color_dict[letter][i][0]] != word [color_dict[letter][i][0]]:
-                            return False
-                    elif color_dict[letter][0][1] == '0':
-                        if guess[color_dict[letter][i][0]] == word [color_dict[letter][i][0]]:
-                            return False
-
-    return True
-
-
 def determine_possible_solutions(guess, ans, possible_solutions):
     new_possible_solutions = []
-    color_code = [*build_color_code(guess, ans)]
-    color_dict = {letter : [] for letter in guess}
-    for i in range(0,5):
-        color_dict[guess[i]].append((i,color_code[i]))
-    # print(color_dict)
+    color_code = build_color_code(guess, ans)
 
     for word in possible_solutions:
-        if evaluate_potential_solution(guess,word,color_dict):
-            # print("included")
-            # print(''.join(word))
+        test_color_code = build_color_code(guess,word)
+        if test_color_code == color_code:
             new_possible_solutions.append(word)
         
     # print(new_possible_solutions)
