@@ -107,16 +107,94 @@ def find_optimal_words(possible_solutions_list):
         std_devs[''.join(guess)] = calculate_std_dev(evaluate_word(guess, possible_solutions_list))
     min_std_dev = min(std_devs.values())
     best_guesses = {word for word in std_devs if std_devs[word] == min_std_dev}
-    print(f"The minimum standard deviation is {min_std_dev}")
-    print(f"The optimal words to guess are {best_guesses}")
+    # print(f"The minimum standard deviation is {min_std_dev}")
+    # print(f"The optimal words to guess are {best_guesses}")
+    return best_guesses
 
+
+def evaluate_potential_solution(guess,word, color_dict):
+    input(">")
+    print(f"word : {word}")
+    
+    for letter in color_dict:
+        # print(letter)
+        match len(color_dict[letter]):
+            #only one occurrence of the letter in guess
+            case 1:
+                print(letter+'1')
+                if color_dict[letter][0][1] == '2':
+                    if guess[color_dict[letter][0][0]] != word [color_dict[letter][0][0]]:
+                        return False
+                elif color_dict[letter][0][1] == '0':
+                    if guess[color_dict[letter][0][0]] in word:
+                        return False
+                else:
+                    if guess[color_dict[letter][0][0]] not in word:
+                        return False
+                    if guess[color_dict[letter][0][0]] == word [color_dict[letter][0][0]]:
+                        return False
+            #multiple occurrences of the letter in guess
+            case _:
+                for i in range(0,len(color_dict[letter])):
+                    print(letter+str(i))
+                    if color_dict[letter][i][1] == '2':
+                        if guess[color_dict[letter][i][0]] != word [color_dict[letter][i][0]]:
+                            return False
+                    elif color_dict[letter][0][1] == '0':
+                        if guess[color_dict[letter][i][0]] == word [color_dict[letter][i][0]]:
+                            return False
+                        
+
+
+    return True
+
+
+def determine_possible_solutions(guess, ans, possible_solutions):
+    new_possible_solutions = []
+    color_code = [*build_color_code(guess, ans)]
+    # print(f"guess: {guess}")
+    # print(f"answe: {ans}")
+    print(color_code)
+    color_dict = {letter : [] for letter in guess}
+    for i in range(0,5):
+        color_dict[guess[i]].append((i,color_code[i]))
+    print(color_dict)
+
+    for word in possible_solutions:
+        if evaluate_potential_solution(guess,word,color_dict):
+            print("included")
+            print(''.join(word))
+            new_possible_solutions.append(word)
+        
+    print(f"There are now {len(new_possible_solutions)} possible solutions")
+    # print(new_possible_solutions)
+    return new_possible_solutions
 
 
 def main():
-    # print(f"\nWelcome to the Wordle Optimizer!\n")
-    # ans = input(f"Enter the word to be optimized: ").lower()
-    find_optimal_words(starting_possible_solutions_list)
-    # guess = input(f"Enter your next guess: ").lower()
+    print(f"\nWelcome to the Wordle Optimizer!\n")
+    print(f"There are now {len(starting_possible_solutions_list)} possible solutions")
+    ans = [*input(f"Enter the word to be optimized: ").lower()]
+
+    possible_solutions_list = starting_possible_solutions_list
+    # best_guess = find_optimal_words(starting_possible_solutions_list)
+    print(f"The optimal guess is: roate")#{best_guess}")
+    solved = False
+    while not solved:
+        bread = input(">")
+        guess = [*input(f"Enter your next guess: ").lower()]
+        if guess == ans:
+            solved = True
+            print("You've solved the word!")
+            break
+
+        
+        possible_solutions_list = determine_possible_solutions(guess,ans,possible_solutions_list)
+        best_guess = find_optimal_words(possible_solutions_list)
+        print(f"The optimal guess is: {best_guess}")
+
+        
+
 
 
 main()
